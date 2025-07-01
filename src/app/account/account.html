@@ -1,0 +1,96 @@
+<!-- ✅ Show form only if not submitted -->
+<div *ngIf="!submitted" class="page-container">
+  <form class="signup-form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+    <!-- Step Progress (Optional) -->
+    <p class="step-indicator">Step {{ currentStep }} of 3</p>
+
+    <!-- Step 1 -->
+    <div *ngIf="currentStep === 1">
+      <h2>Personal Info</h2>
+
+      <label for="fullname">Full Name</label>
+      <input id="fullname" type="text" formControlName="fullname" />
+      <div *ngIf="signupForm.get('fullname')?.touched && signupForm.get('fullname')?.invalid" class="error">
+        Full Name is required
+      </div>
+
+      <label for="username">Username</label>
+      <input id="username" type="text" formControlName="username" />
+      <div *ngIf="signupForm.get('username')?.touched && signupForm.get('username')?.invalid" class="error">
+        Username is required
+      </div>
+
+      <button type="button" (click)="nextStep()">Next</button>
+    </div>
+
+    <!-- Step 2 -->
+    <div *ngIf="currentStep === 2">
+      <h2>Contact Info</h2>
+
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" />
+      <div *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.invalid" class="error">
+        Valid Email is required
+      </div>
+
+      <label for="phone">Phone Number</label>
+      <input id="phone" type="tel" formControlName="phone" />
+      <div *ngIf="signupForm.get('phone')?.touched && signupForm.get('phone')?.invalid" class="error">
+        Valid Phone Number is required
+      </div>
+
+      <label for="gender">Gender</label>
+      <select id="gender" formControlName="gender">
+        <option value="">Select</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+      <div *ngIf="signupForm.get('gender')?.touched && signupForm.get('gender')?.invalid" class="error">
+        Gender is required
+      </div>
+
+      <button type="button" (click)="prevStep()">Back</button>
+      <button type="button" (click)="nextStep()">Next</button>
+    </div>
+
+    <!-- Step 3 -->
+    <div *ngIf="currentStep === 3">
+      <h2> Security</h2>
+
+      <label for="dob">Date of Birth</label>
+      <input id="dob" type="date" formControlName="dob" />
+      <div *ngIf="signupForm.get('dob')?.touched && signupForm.get('dob')?.invalid" class="error">
+        Date of Birth is required
+      </div>
+
+      <label for="password">Password</label>
+      <input id="password" type="password" formControlName="password" />
+      <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid" class="error">
+        Password is required (min 6 characters)
+      </div>
+
+      <label for="confirmPassword">Confirm Password</label>
+      <input id="confirmPassword" type="password" formControlName="confirmPassword" />
+      <div *ngIf="signupForm.get('confirmPassword')?.touched && signupForm.get('confirmPassword')?.invalid"
+        class="error">
+        Confirm Password is required
+      </div>
+      <div *ngIf="signupForm.get('confirmPassword')?.touched && !passwordsMatch()" class="error">
+        Passwords do not match
+      </div>
+
+      <button type="button" (click)="prevStep()">Back</button>
+      <button type="submit" [disabled]="!passwordsMatch()">Submit</button>
+    </div>
+
+  </form>
+</div>
+
+<!-- ✅ Success Message After Submission -->
+<div *ngIf="submitted" class="success-message">
+  <h2>🎉 Account Created Successfully!</h2>
+  <p>Thank you for registering with Anuradha Foods.</p>
+  <button (click)="submitted = false">Create Another Account</button>
+</div>
