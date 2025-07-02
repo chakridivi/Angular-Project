@@ -68,6 +68,8 @@ currentStep = 1;
       this.submitted = true; // show success message
       this.signupForm.reset(); // clear form
       this.currentStep = 1; // reset to first step
+      
+      
     }
   }
   
